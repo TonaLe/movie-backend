@@ -1,4 +1,4 @@
-package org.movie.service.dto.integration.response;
+package org.movie.service.integration.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,21 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieResponse {
-    private int page;
-    private List<MovieResult> results;
-
-    @JsonProperty("total_pages")
-    private int totalPages;
-
-    @JsonProperty("total_results")
-    private int totalResults;
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class MovieResult {
+public class MovieResult {
     private boolean adult;
 
     @JsonProperty("backdrop_path")

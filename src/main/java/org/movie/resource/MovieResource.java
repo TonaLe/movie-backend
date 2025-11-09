@@ -1,14 +1,21 @@
 package org.movie.resource;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+import org.movie.service.MovieService;
+import org.movie.service.integration.response.MovieResponse;
 
 @Path("/api")
 public class MovieResource {
 
+    @Inject
+    MovieService movieService;
+
     @GET
     @Path("/movies")
-    public String getMovies() {
-        return "Movies";
+    public MovieResponse getMovies(@QueryParam("query") String query, @QueryParam("sort_by") String sortBy) {
+        return movieService.fetchMovie();
     }
 }

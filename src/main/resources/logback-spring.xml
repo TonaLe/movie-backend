@@ -1,0 +1,11 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%highlight([%4level]) %cyan(%d) %magenta([%30c{0}]) %(%msg%n%xEx){info=normal}</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
