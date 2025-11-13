@@ -3,7 +3,9 @@ package org.movie.resource;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 import org.movie.service.MovieService;
 import org.movie.service.integration.response.MovieResponse;
 
@@ -15,6 +17,7 @@ public class MovieResource {
 
     @GET
     @Path("/movies")
+    @Produces(MediaType.APPLICATION_JSON)  // Add this!
     public MovieResponse getMovies(@QueryParam("query") String query, @QueryParam("sort_by") String sortBy) {
         return movieService.fetchMovie();
     }
