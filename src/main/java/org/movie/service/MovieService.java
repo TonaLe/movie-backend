@@ -11,7 +11,11 @@ public class MovieService {
     @Inject
     MovieDBClient movieDBClient;
 
-    public MovieResponse fetchMovie() {
-        return movieDBClient.fetchMovie();
+    public MovieResponse fetchAllMovies() {
+        return movieDBClient.fetchAllMovies();
+    }
+
+    public MovieResponse fetchMoviesByKeyword(String keyword) {
+        return movieDBClient.fetchMoviesByKeyword(keyword);
     }
 }
