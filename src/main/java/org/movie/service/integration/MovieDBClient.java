@@ -93,27 +93,32 @@ public class MovieDBClient {
      * @param keyword optional search keyword (can be null or empty)
      */
     private Request buildMovieRequest(String keyword) {
-        HttpUrl.Builder urlBuilder = null;
-        // Add keyword parameter only if provided
+        HttpUrl.Builder urlBuilder;
+
+        // Use different endpoints based on whether we're searching or discovering
         if (StringUtils.isNotBlank(keyword)) {
+            // Use /search/movie endpoint for keyword search
             urlBuilder = HttpUrl.parse(host + searchMoviePath).newBuilder();
-            urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_WITH_KEYWORDS, keyword);
+            urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_QUERY, keyword);
         } else {
+            // Use /discover/movie endpoint for browsing all movies
             urlBuilder = HttpUrl.parse(host + discoverPath).newBuilder();
+            urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_SORT_BY,
+                    MovieAPIConstant.VALUE_SORT_BY_POPULARITY);
         }
 
+        // Common parameters for both endpoints
         urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_INCLUDE_ADULT,
                         MovieAPIConstant.VALUE_INCLUDE_ADULT)
-                .addQueryParameter(MovieAPIConstant.PARAM_INCLUDE_VIDEO,
-                        MovieAPIConstant.VALUE_INCLUDE_VIDEO)
                 .addQueryParameter(MovieAPIConstant.PARAM_LANGUAGE,
                         MovieAPIConstant.VALUE_LANGUAGE)
                 .addQueryParameter(MovieAPIConstant.PARAM_PAGE,
-                        MovieAPIConstant.VALUE_PAGE_DEFAULT)
-                .addQueryParameter(MovieAPIConstant.PARAM_SORT_BY,
-                        MovieAPIConstant.VALUE_SORT_BY_POPULARITY);
+                        MovieAPIConstant.VALUE_PAGE_DEFAULT);
 
         HttpUrl url = urlBuilder.build();
+
+        log.debug("Built URL: {}", url.toString());
+
         return new Request.Builder()
                 .url(url)
                 .get()

@@ -6,8 +6,7 @@ public class MovieAPIConstant {
     public static final String PARAM_LANGUAGE = "language";
     public static final String PARAM_PAGE = "page";
     public static final String PARAM_SORT_BY = "sort_by";
-    public static final String PARAM_WITH_KEYWORDS = "with_keywords";
-
+    public static final String PARAM_QUERY = "query";
     // Default values
     public static final String VALUE_INCLUDE_ADULT = "false";
     public static final String VALUE_INCLUDE_VIDEO = "false";
