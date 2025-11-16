@@ -33,6 +33,9 @@ public class MovieDBClient {
     @ConfigProperty(name = "db.client.discover_path")
     String discoverPath;
 
+    @ConfigProperty(name = "db.client.search_movie_path")
+    String searchMoviePath;
+
     @Inject
     ObjectMapper objectMapper;
 
@@ -90,8 +93,16 @@ public class MovieDBClient {
      * @param keyword optional search keyword (can be null or empty)
      */
     private Request buildMovieRequest(String keyword) {
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(host + discoverPath).newBuilder()
-                .addQueryParameter(MovieAPIConstant.PARAM_INCLUDE_ADULT,
+        HttpUrl.Builder urlBuilder = null;
+        // Add keyword parameter only if provided
+        if (StringUtils.isNotBlank(keyword)) {
+            urlBuilder = HttpUrl.parse(host + searchMoviePath).newBuilder();
+            urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_WITH_KEYWORDS, keyword);
+        } else {
+            urlBuilder = HttpUrl.parse(host + discoverPath).newBuilder();
+        }
+
+        urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_INCLUDE_ADULT,
                         MovieAPIConstant.VALUE_INCLUDE_ADULT)
                 .addQueryParameter(MovieAPIConstant.PARAM_INCLUDE_VIDEO,
                         MovieAPIConstant.VALUE_INCLUDE_VIDEO)
@@ -102,13 +113,7 @@ public class MovieDBClient {
                 .addQueryParameter(MovieAPIConstant.PARAM_SORT_BY,
                         MovieAPIConstant.VALUE_SORT_BY_POPULARITY);
 
-        // Add keyword parameter only if provided
-        if (StringUtils.isNotBlank(keyword)) {
-            urlBuilder.addQueryParameter(MovieAPIConstant.PARAM_WITH_KEYWORDS, keyword);
-        }
-
         HttpUrl url = urlBuilder.build();
-
         return new Request.Builder()
                 .url(url)
                 .get()

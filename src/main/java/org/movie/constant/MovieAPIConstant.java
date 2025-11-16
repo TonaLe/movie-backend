@@ -1,8 +1,6 @@
 package org.movie.constant;
 
 public class MovieAPIConstant {
-    public static final String DOMAIN = "https://api.themoviedb.org/3";
-    public static final String DISCOVERY_MOVIE = "/discover/movie";
     public static final String PARAM_INCLUDE_ADULT = "include_adult";
     public static final String PARAM_INCLUDE_VIDEO = "include_video";
     public static final String PARAM_LANGUAGE = "language";
