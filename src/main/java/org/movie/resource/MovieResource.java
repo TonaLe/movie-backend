@@ -7,7 +7,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import org.apache.commons.lang3.StringUtils;
-import org.movie.service.MovieService;
+import org.movie.service.movie.MovieService;
 import org.movie.service.integration.response.MovieResponse;
 
 @Path("/api")
